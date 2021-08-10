@@ -1,0 +1,363 @@
+{
+  "version": 1,
+  "projects": {
+    "react": {
+      "root": "apps/react",
+      "sourceRoot": "apps/react/src",
+      "projectType": "application",
+      "schematics": {},
+      "architect": {
+        "build": {
+          "builder": "@nrwl/web:build",
+          "options": {
+            "outputPath": "dist/apps/react",
+            "index": "apps/react/src/index.html",
+            "main": "apps/react/src/main.tsx",
+            "polyfills": "apps/react/src/polyfills.ts",
+            "tsConfig": "apps/react/tsconfig.app.json",
+            "assets": ["apps/react/src/favicon.ico", "apps/react/src/assets"],
+            "styles": [],
+            "scripts": [],
+            "webpackConfig": "@nrwl/react/plugins/webpack"
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/react/src/environments/environment.ts",
+                  "with": "apps/react/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@nrwl/web:dev-server",
+          "options": {
+            "buildTarget": "react:build"
+          },
+          "configurations": {
+            "production": {
+              "buildTarget": "react:build:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:lint",
+          "options": {
+            "linter": "eslint",
+            "tsConfig": ["apps/react/tsconfig.app.json", "apps/react/tsconfig.spec.json"],
+            "exclude": ["**/node_modules/**", "!apps/react/**/*"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "apps/react/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "react-e2e": {
+      "root": "apps/react-e2e",
+      "sourceRoot": "apps/react-e2e/src",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/react-e2e/cypress.json",
+            "tsConfig": "apps/react-e2e/tsconfig.e2e.json",
+            "devServerTarget": "react:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "react:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:lint",
+          "options": {
+            "linter": "eslint",
+            "tsConfig": ["apps/react-e2e/tsconfig.e2e.json"],
+            "exclude": ["**/node_modules/**", "!apps/react-e2e/**/*"]
+          }
+        }
+      }
+    },
+    "shared-hooks": {
+      "root": "libs/shared/hooks",
+      "sourceRoot": "libs/shared/hooks/src",
+      "projectType": "library",
+      "schematics": {},
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:lint",
+          "options": {
+            "linter": "eslint",
+            "tsConfig": ["libs/shared/hooks/tsconfig.lib.json", "libs/shared/hooks/tsconfig.spec.json"],
+            "exclude": ["**/node_modules/**", "!libs/shared/hooks/**/*"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/shared/hooks/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "ui": {
+      "root": "libs/ui",
+      "sourceRoot": "libs/ui/src",
+      "projectType": "library",
+      "schematics": {},
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:lint",
+          "options": {
+            "linter": "eslint",
+            "tsConfig": ["libs/ui/tsconfig.lib.json", "libs/ui/tsconfig.spec.json"],
+            "exclude": ["**/node_modules/**", "!libs/ui/**/*"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/ui/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "storybook": {
+          "builder": "@nrwl/storybook:storybook",
+          "options": {
+            "uiFramework": "@storybook/react",
+            "port": 4400,
+            "config": {
+              "configFolder": "libs/ui/.storybook"
+            }
+          },
+          "configurations": {
+            "ci": {
+              "quiet": true
+            }
+          }
+        },
+        "build-storybook": {
+          "builder": "@nrwl/storybook:build",
+          "options": {
+            "uiFramework": "@storybook/react",
+            "outputPath": "dist/storybook/ui",
+            "config": {
+              "configFolder": "libs/ui/.storybook"
+            }
+          },
+          "configurations": {
+            "ci": {
+              "quiet": true
+            }
+          }
+        }
+      }
+    },
+    "store-authentication": {
+      "root": "libs/store/authentication",
+      "sourceRoot": "libs/store/authentication/src",
+      "projectType": "library",
+      "schematics": {},
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:lint",
+          "options": {
+            "linter": "eslint",
+            "tsConfig": ["libs/store/authentication/tsconfig.lib.json", "libs/store/authentication/tsconfig.spec.json"],
+            "exclude": ["**/node_modules/**", "!libs/store/authentication/**/*"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/store/authentication/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "config": {
+      "root": "libs/config",
+      "sourceRoot": "libs/config/src",
+      "projectType": "library",
+      "schematics": {},
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:lint",
+          "options": {
+            "linter": "eslint",
+            "tsConfig": ["libs/config/tsconfig.lib.json", "libs/config/tsconfig.spec.json"],
+            "exclude": ["**/node_modules/**", "!libs/config/**/*"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/config/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "shared-api": {
+      "root": "libs/shared/api",
+      "sourceRoot": "libs/shared/api/src",
+      "projectType": "library",
+      "schematics": {},
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:lint",
+          "options": {
+            "linter": "eslint",
+            "tsConfig": ["libs/shared/api/tsconfig.lib.json", "libs/shared/api/tsconfig.spec.json"],
+            "exclude": ["**/node_modules/**", "!libs/shared/api/**/*"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/shared/api/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "shared-types": {
+      "root": "libs/shared/types",
+      "sourceRoot": "libs/shared/types/src",
+      "projectType": "library",
+      "schematics": {},
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:lint",
+          "options": {
+            "linter": "eslint",
+            "tsConfig": ["libs/shared/types/tsconfig.lib.json", "libs/shared/types/tsconfig.spec.json"],
+            "exclude": ["**/node_modules/**", "!libs/shared/types/**/*"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/shared/types/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "shared-utils": {
+      "root": "libs/shared/utils",
+      "sourceRoot": "libs/shared/utils/src",
+      "projectType": "library",
+      "schematics": {},
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:lint",
+          "options": {
+            "linter": "eslint",
+            "tsConfig": ["libs/shared/utils/tsconfig.lib.json", "libs/shared/utils/tsconfig.spec.json"],
+            "exclude": ["**/node_modules/**", "!libs/shared/utils/**/*"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/shared/utils/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "ui-e2e": {
+      "root": "apps/ui-e2e",
+      "sourceRoot": "apps/ui-e2e/src",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/ui-e2e/cypress.json",
+            "tsConfig": "apps/ui-e2e/tsconfig.e2e.json",
+            "devServerTarget": "ui:storybook"
+          },
+          "configurations": {
+            "ci": {
+              "devServerTarget": "ui:storybook:ci"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {}
+        }
+      }
+    },
+    "store-temp": {
+      "root": "libs/store/temp",
+      "sourceRoot": "libs/store/temp/src",
+      "projectType": "library",
+      "schematics": {},
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/store/temp/**/*.{ts,tsx,js,jsx}"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/store/temp/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    }
+  },
+  "cli": {
+    "defaultCollection": "@nrwl/react"
+  },
+  "schematics": {
+    "@nrwl/react": {
+      "application": {
+        "style": "styled-components",
+        "linter": "eslint",
+        "babel": true
+      },
+      "component": {
+        "style": "styled-components"
+      },
+      "library": {
+        "style": "styled-components",
+        "linter": "eslint"
+      }
+    }
+  },
+  "defaultProject": "react"
+}

@@ -1,0 +1,61 @@
+{
+  "npmScope": "internship",
+  "affected": {
+    "defaultBase": "master"
+  },
+  "implicitDependencies": {
+    "workspace.json": "*",
+    "package.json": {
+      "dependencies": "*",
+      "devDependencies": "*"
+    },
+    "tsconfig.base.json": "*",
+    "tslint.json": "*",
+    "nx.json": "*"
+  },
+  "tasksRunnerOptions": {
+    "default": {
+      "runner": "@nrwl/workspace/tasks-runners/default",
+      "options": {
+        "cacheableOperations": ["build", "lint", "test", "e2e", "build-storybook"]
+      }
+    }
+  },
+  "projects": {
+    "react": {
+      "tags": []
+    },
+    "react-e2e": {
+      "tags": [],
+      "implicitDependencies": ["react"]
+    },
+    "shared-hooks": {
+      "tags": []
+    },
+    "ui": {
+      "tags": []
+    },
+    "store-authentication": {
+      "tags": []
+    },
+    "config": {
+      "tags": []
+    },
+    "shared-api": {
+      "tags": []
+    },
+    "shared-types": {
+      "tags": []
+    },
+    "shared-utils": {
+      "tags": []
+    },
+    "ui-e2e": {
+      "tags": [],
+      "implicitDependencies": ["ui"]
+    },
+    "store-temp": {
+      "tags": []
+    }
+  }
+}
